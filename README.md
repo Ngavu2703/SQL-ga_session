@@ -4,5 +4,6 @@ In this project, I explore user behavior data by writing 8 SQL queries in Google
    Source: Google Analytics sample dataset
    Table: bigquery-public-data.google_analytics_sample.ga_sessions_*
    Mô tả
-   ![Field description](https://drive.google.com/file/d/1OqZ8wuCyY_E0YR_hvYC_F4npbedfQzSJ/view?usp=drive_link)
+   <img width="421" alt="S1" src="https://github.com/user-attachments/assets/10493d42-e6c7-415d-916d-6c78b32c9593" />
+
 3. Code
