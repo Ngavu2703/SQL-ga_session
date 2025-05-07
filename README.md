@@ -3,11 +3,11 @@ In this project, I explore user behavior data by writing 8 SQL queries in Google
 ## 1. Introduce
 Source: Google Analytics sample dataset  
 Table: bigquery-public-data.google_analytics_sample.ga_sessions_*  
-Mô tả  
-<img width="421" alt="S1" src="https://github.com/user-attachments/assets/10493d42-e6c7-415d-916d-6c78b32c9593" />  
-<img width="569" alt="s2" src="https://github.com/user-attachments/assets/199dc079-058a-4404-9eba-e7adebf21a79" />  
+Description<br>  
+<img width="887" alt="Description" src="https://github.com/user-attachments/assets/97d0c3fa-2cad-41ce-aa55-c4e2ba3a38b1" /><br>
+
 ## 2. Code  
-**Query 01: calculate total visit, pageview, transaction for Jan, Feb and March 2017 (order by month)**
+**Query 01: calculate total visit, pageview, transaction for Jan, Feb and March 2017 (order by month)** <br>
 SELECT<br>
   SUM(totals.visits) AS visits,<br>
   SUM(totals.pageviews) AS pageviews,<br>
@@ -22,10 +22,10 @@ ORDER BY month;<br>
  
 **Query 02: Bounce rate per traffic source in July 2017 (Bounce_rate = num_bounce/total_visit) (order by total_visit DESC)** <br>
 SELECT<br>
-  trafficSource.`source` AS sources<br>
-  ,SUM(totals.bounces) AS total_no_of_bounces<br>
-  ,SUM(totals.visits) AS total_visits<br>
-  ,ROUND((100* SUM(totals.bounces)/SUM(totals.visits)),3) AS bounce_rate<br>
+  trafficSource.`source` AS sources,<br>
+  SUM(totals.bounces) AS total_no_of_bounces,<br>
+  SUM(totals.visits) AS total_visits,<br>
+  ROUND((100* SUM(totals.bounces)/SUM(totals.visits)),3) AS bounce_rate<br>
 FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`<br>
 WHERE _TABLE_SUFFIX BETWEEN '0701' AND '0731'<br>
 GROUP BY trafficSource.`source`<br>
@@ -34,10 +34,10 @@ ORDER BY total_visits DESC;<br>
 <img width="406" alt="S4" src="https://github.com/user-attachments/assets/98f1f6f2-35e9-43b0-a9c0-1efcc9847903" /><br>
 
 **Query 3: Revenue by traffic source by week, by month in June 2017** <br>
-WITH month_data as( <br>
+WITH month_data AS ( <br>
   SELECT<br>
-    "Month" as time_type,<br>
-    FORMAT_DATE("%Y%m", parse_date("%Y%m%d", date)) as month,<br>
+    "Month" AS time_type,<br>
+    FORMAT_DATE("%Y%m", parse_date("%Y%m%d", date)) AS month,<br>
     trafficSource.source AS source,<br>
     SUM(p.productRevenue)/1000000 AS revenue<br>
   FROM `bigquery-public-data.google_analytics_sample.ga_sessions_201706*`,<br>
@@ -48,10 +48,10 @@ WITH month_data as( <br>
   ORDER BY revenue DESC <br>
 ),<br>
 
-week_data as( <br>
+week_data AS( <br>
   SELECT <br>
-    "Week" as time_type,<br>
-    FORMAT_DATE("%Y%W", parse_date("%Y%m%d", date)) as week,<br>
+    "Week" AS time_type,<br>
+    FORMAT_DATE("%Y%W", parse_date("%Y%m%d", date)) AS week,<br>
     trafficSource.source AS source,<br>
     SUM(p.productRevenue)/1000000 AS revenue <br>
   FROM `bigquery-public-data.google_analytics_sample.ga_sessions_201706*`,<br>
@@ -94,8 +94,8 @@ GROUP BY  month, user_type;<br>
 **Query 05: Average number of transactions per user that made a purchase in July 2017** <br>
 
 SELECT<br>
-    FORMAT_DATE("%Y%m",parse_date("%Y%m%d",date)) as month,<br>
-    	SUM(totals.transactions)/count(distinct fullvisitorid) as Avg_total_transactions_per_user<br>
+    FORMAT_DATE("%Y%m",parse_date("%Y%m%d",date)) AS month,<br>
+    	SUM(totals.transactions)/count(distinct fullvisitorid) AS Avg_total_transactions_per_user<br>
 FROM `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`,<br>
     UNNEST (hits) hits,<br>
     UNNEST(product) product<br>
@@ -132,7 +132,7 @@ WITH u AS ( <br>
       AND _TABLE_SUFFIX BETWEEN '0701' AND '0731' <br>
 )<br>
 SELECT<br>
-  v2ProductName as other_purchased_products,<br>
+  v2ProductName AS other_purchased_products,<br>
   SUM(productQuantity) AS total_quantity<br>
 FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*` AS m,<br>
     UNNEST(hits) AS hits,<br>
@@ -149,15 +149,15 @@ ORDER BY total_quantity DESC; <br>
 <img width="351" alt="S9" src="https://github.com/user-attachments/assets/b3cb38ad-8111-480e-a662-34716068117d" /> <br>
 
 **Query 08: Calculate cohort map from product view to addtocart to purchase in Jan, Feb and March 2017** <br>
-WITH product_data as( <br>
+WITH product_data AS( <br>
 SELECT<br>
-    FORMAT_DATE('%Y%m', parse_date('%Y%m%d',date)) as month,<br>
-    COUNT(CASE WHEN eCommerceAction.action_type = '2' THEN product.v2ProductName END) as num_product_view,<br>
-    COUNT(CASE WHEN eCommerceAction.action_type = '3' THEN product.v2ProductName END) as num_add_to_cart,<br>
-    count(CASE WHEN eCommerceAction.action_type = '6' and product.productRevenue is not null THEN product.v2ProductName END) as num_purchase<br>
+    FORMAT_DATE('%Y%m', parse_date('%Y%m%d',date)) AS month,<br>
+    COUNT(CASE WHEN eCommerceAction.action_type = '2' THEN product.v2ProductName END) AS num_product_view,<br>
+    COUNT(CASE WHEN eCommerceAction.action_type = '3' THEN product.v2ProductName END) AS num_add_to_cart,<br>
+    count(CASE WHEN eCommerceAction.action_type = '6' and product.productRevenue is not null THEN product.v2ProductName END) AS num_purchase<br>
 FROM `bigquery-public-data.google_analytics_sample.ga_sessions_*`,<br>
- UNNEST(hits) as hits,<br>
-UNNEST (hits.product) as product<br>
+ UNNEST(hits) AS hits,<br>
+UNNEST (hits.product) AS product<br>
 WHERE _table_suffix between '20170101' and '20170331'<br>
 AND eCommerceAction.action_type in ('2','3','6')<br>
 GROUP BY month<br>
@@ -166,8 +166,8 @@ ORDER BY month<br>
 
 SELECT<br>
     *,<br>
-    ROUND(num_add_to_cart/num_product_view * 100, 2) as add_to_cart_rate,<br>
-    ROUND(num_purchase/num_product_view * 100, 2) as purchase_rate<br>
+    ROUND(num_add_to_cart/num_product_view * 100, 2) AS add_to_cart_rate,<br>
+    ROUND(num_purchase/num_product_view * 100, 2) AS purchase_rate<br>
 FROM product_data;<br>
 - Result<br>
   <img width="404" alt="S10" src="https://github.com/user-attachments/assets/7489778f-afe7-4bf6-8bd3-ae3cd0357b21" /><br>
