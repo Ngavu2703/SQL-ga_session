@@ -3,21 +3,20 @@ In this project, I explore user behavior data by writing 8 SQL queries in Google
 ## 1. Introduce
 Source: Google Analytics sample dataset  
 Table: bigquery-public-data.google_analytics_sample.ga_sessions_*  
-Mô tả
-   <img width="421" alt="S1" src="https://github.com/user-attachments/assets/10493d42-e6c7-415d-916d-6c78b32c9593" />
-   <img width="569" alt="s2" src="https://github.com/user-attachments/assets/199dc079-058a-4404-9eba-e7adebf21a79" />
-3. Code
+Mô tả  
+<img width="421" alt="S1" src="https://github.com/user-attachments/assets/10493d42-e6c7-415d-916d-6c78b32c9593" />  
+<img width="569" alt="s2" src="https://github.com/user-attachments/assets/199dc079-058a-4404-9eba-e7adebf21a79" />  
+## 2. Code  
 Query 01: calculate total visit, pageview, transaction for Jan, Feb and March 2017 (order by month)
-
-SELECT
-  SUM(totals.visits) AS visits,
-  SUM(totals.pageviews) AS pageviews,
-  SUM(totals.transactions) AS transactions,
-  FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month
-FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
-WHERE _TABLE_SUFFIX BETWEEN '0101' AND '0331'
-GROUP BY month
-ORDER BY month;
+SELECT<br>
+  SUM(totals.visits) AS visits,<br>
+  SUM(totals.pageviews) AS pageviews,<br>
+  SUM(totals.transactions) AS transactions,<br>
+  FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month<br>
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*<br>`
+WHERE _TABLE_SUFFIX BETWEEN '0101' AND '0331'<br>
+GROUP BY month<br>
+ORDER BY month;<br>
 - Result
  <img width="379" alt="S3" src="https://github.com/user-attachments/assets/954623d5-9243-42d4-820b-02bbaea651f8" />
  
