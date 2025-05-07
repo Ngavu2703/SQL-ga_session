@@ -1,9 +1,9 @@
-<img width="569" alt="s2" src="https://github.com/user-attachments/assets/ed72b470-9828-4de3-9a3a-63efbc9d060a" /># SQL-ga_session
+# SQL - GA_SESSION
 In this project, I explore user behavior data by writing 8 SQL queries in Google BigQuery, based on the Google Analytics sample dataset — specifically focusing on the ga_sessions table.
-1. Introduce
-   Source: Google Analytics sample dataset
-   Table: bigquery-public-data.google_analytics_sample.ga_sessions_*
-   Mô tả
+## 1. Introduce
+Source: Google Analytics sample dataset
+Table: bigquery-public-data.google_analytics_sample.ga_sessions_*
+Mô tả
    <img width="421" alt="S1" src="https://github.com/user-attachments/assets/10493d42-e6c7-415d-916d-6c78b32c9593" />
    <img width="569" alt="s2" src="https://github.com/user-attachments/assets/199dc079-058a-4404-9eba-e7adebf21a79" />
 3. Code
